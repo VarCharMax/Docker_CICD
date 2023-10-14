@@ -1,0 +1,43 @@
+FROM arabesque/minimal-node-chromium-build-env:latest as builder
+
+ENV BUILDER_SRC_DIR=/usr/src
+
+# setup source code directory and copy source code
+WORKDIR $BUILDER_SRC_DIR
+COPY . .
+
+# headless installation
+RUN npm ci
+RUN npm run style
+RUN npm run lint
+RUN npm run build:prod
+
+FROM arabesque/minimal-node-chrome-test-env:latest as unittester
+
+ENV BUILDER_SRC_DIR=/usr/src
+ENV TESTER_SRC_DIR=/usr/src
+
+WORKDIR $TESTER_SRC_DIR
+
+COPY --from=builder $BUILDER_SRC_DIR .
+
+RUN npm run test:prod
+
+FROM arabesque/minimal-node-chrome-test-env:latest as e2etester
+
+ENV BUILDER_SRC_DIR=/usr/src
+ENV TESTER_SRC_DIR=/usr/src
+
+WORKDIR $TESTER_SRC_DIR
+
+COPY --from=builder $BUILDER_SRC_DIR .
+
+# TODO: Add cypress e2e tests
+
+
+FROM nginx:latest as webserver
+
+ENV BUILDER_SRC_DIR=/usr/src
+
+COPY --from=unittester $BUILDER_SRC_DIR/dist/lemon-mart /var/www/mysite
+COPY ./mysite.conf /etc/nginx/conf.d/default.conf
