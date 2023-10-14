@@ -39,5 +39,5 @@ FROM nginx:latest as webserver
 
 ENV BUILDER_SRC_DIR=/usr/src
 
-COPY --from=unittester $BUILDER_SRC_DIR/dist/lemon-mart /var/www/mysite
+COPY --from=unittester $BUILDER_SRC_DIR/dist /var/www/mysite
 COPY ./mysite.conf /etc/nginx/conf.d/default.conf
