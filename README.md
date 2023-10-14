@@ -8,4 +8,4 @@ The container is hosted in a deployment host, such as CircleCI or Azure. When bu
 
 The project name could be added dynamically as an environmental variable.
 
-TODO:: complete Cypress e2e tests. The Chrome infrastructure has been added, but not tests have been created, so the build will fail at this stage. (e2e testing isn't always included in CI/CD chains, so this stage is optional.)
+TODO: complete Cypress e2e tests. The Chrome infrastructure has been added, but not tests have been created, so the build will fail at this stage. (e2e testing isn't always included in CI/CD chains, so this stage is optional.)

@@ -1,0 +1,69 @@
+{
+  "name": "my-ng-fullstack-app",
+  "version": "0.9.0",
+  "scripts": {
+    "ng": "ng",
+    "style:fix": "import-sort --write \"**/{src,tests,e2e}/**/*.ts\" && prettier --write \"**/{src,tests,e2e}/**/*.{*css,ts,html}\"",
+    "style": "prettier --check \"**/{src,tests,e2e}/**/*.{*css,ts,html}\"",
+    "start": "ng serve --port 5000",
+    "build": "ng build",
+    "test": "ng test my-ng-fullstack-app --browsers Chrome",
+    "test:debug": "npm test -- --browsers Chrome --source-map",
+    "lint": "run-p lint:es lint:tsc",
+    "lint:fix": "run-s lint:es:fix lint:tsc",
+    "build:prod": "ng build --configuration production",
+    "build:ci": "cross-conf-env docker build -f Dockerfile.integration . -t $npm_package_config_imageRepo:latest",
+    "test:prod": "npm test -- --browsers ChromiumNoSandbox --watch=false",
+    "lint:es": "eslint src --ignore-pattern \"**/{test,polyfills}.ts\"",
+    "lint:es:fix": "eslint --fix src --ignore-pattern \"**/{test,polyfills}.ts\"",
+    "lint:tsc": "tsc --noEmit --skipLibCheck"
+  },
+  "private": true,
+  "config": {
+    "imageRepo": "mydockerhubrepo/my-ng-fullstack-app",
+    "imageName": "my-ng-fullstack-appImage",
+    "imagePort": "8080",
+    "internalContainerPort": "80"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/jasmine": "~4.3.0",
+    "@types/jasminewd2": "~2.0.10",
+    "@types/node": "^20.4.9",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "angular-unit-test-helper": "^16.0.0",
+    "cross-conf-env": "^1.3.0",
+    "cypress": "^12.17.4",
+    "dev-norms": "^2.0.4",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-cypress": "^2.10.3",
+    "init-dev-env": "^2.0.0",
+    "jasmine": "^4.3.0",
+    "jasmine-core": "~4.6.0",
+    "jasmine-spec-reporter": "~7.0.0",
+    "js-beautify": "^1.14.9",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "npm-run-all": "^4.1.5",
+    "open-cli": "^7.2.0",
+    "prettier": "^3.0.1",
+    "rimraf": "^5.0.1",
+    "ts-node": "~10.9.1",
+    "tsutils": "^3.21.0",
+    "typescript": "~5.1.3"
+  },
+  "importSort": {
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "module",
+      "options": {}
+    }
+  }
+}
